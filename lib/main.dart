@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hostel_keys_management/screens/ShowQR.dart';
 import 'package:hostel_keys_management/screens/login.dart';
 import 'package:hostel_keys_management/screens/room.dart';
+import 'package:hostel_keys_management/screens/rooms.dart';
 import 'package:hostel_keys_management/screens/verify_otp.dart';
 import 'package:hostel_keys_management/screens/scanQR.dart';
 import './screens/home.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           '/scan_qr_code': (context) => ScanQrPage(),
           '/show_qr_code': (context) => const ShowQRPage(),
           '/room': (context) => Room('1'),
+          '/rooms': (context) => RoomsScreen(),
           // '/generate_random_qr': (context) => TestHomePage(),
           // '/web_view': (context) =>
           //     WebViewContainer('https://github.com/the-halfbloodprince'),

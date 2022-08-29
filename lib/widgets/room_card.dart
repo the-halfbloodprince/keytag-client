@@ -3,13 +3,34 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class RoomCard extends StatelessWidget {
-  String title;
+  String title, id;
   bool locked;
 
-  RoomCard(this.title, this.locked);
+  RoomCard(this.id, this.title, this.locked);
+
+  void handleTap() async {
+    print('go to room ' + title);
+    // Navigator.pushNamed(context, '/room')
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GestureDetector(
+      onTap: handleTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

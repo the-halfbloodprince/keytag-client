@@ -16,6 +16,7 @@ class TestHomePage extends StatelessWidget {
     Route('Scan QR Code', '/scan_qr_code'),
     Route('Login', '/login'),
     Route('Room', '/room'),
+    Route('Rooms', '/rooms'),
     Route('User', '/user'),
     Route('Web View Test', '/web_view'),
   ];
