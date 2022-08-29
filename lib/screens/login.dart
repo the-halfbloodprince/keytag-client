@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:hostel_keys_management/screens/verify_otp.dart';
+import 'package:hostel_keys_management/config/variables.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../screens/verify_otp.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
+class LoginPage extends StatefulWidget {
   static String imgSrc =
       'https://images.unsplash.com/photo-1661570323628-06de800328c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1330&q=80';
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final phoneFieldController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    void sendOTP(String phone) {
-      Navigator.pushNamed(context, '/verify_otp');
+    void handleSubmit(String mobile) async {
+      // validate
+      if (mobile.length != 10) {
+        // wrong
+        // ! TODO: validation for phone number
+        return;
+      }
+
+      // await send request
+
+      Navigator.pushNamed(context, '/verify_otp',
+          arguments: OTPScreenArgs(mobile));
     }
 
     return Scaffold(
@@ -20,7 +37,7 @@ class LoginPage extends StatelessWidget {
         // color: Colors.amber,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(imgSrc),
+            image: NetworkImage(LoginPage.imgSrc),
             fit: BoxFit.cover,
           ),
         ),
@@ -38,19 +55,17 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 height: MediaQuery.of(context).size.height * 0.86 * 0.15,
                 child: Row(
-                  children: [
-                    Image.network(
-                        'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png')
-                  ],
+                  children: [Image.network(logoUrl)],
                 ),
                 // color: Colors.red,
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
                   // color: Colors.purple,
@@ -63,30 +78,32 @@ class LoginPage extends StatelessWidget {
                           'Login',
                           style: TextStyle(fontSize: 40),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         // TextBox.fromLTRBD(20, 20, 20, 20, TextDirection.ltr),
-                        const TextField(
+                        TextField(
+                          controller: phoneFieldController,
                           keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '69696 96969',
                             border: OutlineInputBorder(),
                             labelText: 'Mobile Number',
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         ElevatedButton.icon(
-                          onPressed: () => sendOTP('7002845656'),
-                          icon: Icon(Icons.arrow_forward),
-                          label: Text('Send OTP'),
+                          onPressed: () =>
+                              handleSubmit(phoneFieldController.text),
+                          icon: const Icon(Icons.arrow_forward),
+                          label: const Text('Send OTP'),
                           style: ElevatedButton.styleFrom(
                             // padding: EdgeInsets.all(20),
-                            minimumSize: Size.fromHeight(50),
+                            minimumSize: const Size.fromHeight(50),
                             primary: Colors.lightBlueAccent,
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontSize: 20,
                             ),
                           ),

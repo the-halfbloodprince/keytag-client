@@ -1,11 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/models/users.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../config/variables.dart';
 
-class VerifyOTP extends StatelessWidget {
+class OTPScreenArgs {
+  String mobile;
+  OTPScreenArgs(this.mobile);
+}
+
+class VerifyOTP extends StatefulWidget {
   const VerifyOTP({Key? key}) : super(key: key);
+
   static String imgSrc =
       'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80';
+
+  @override
+  State<VerifyOTP> createState() => _VerifyOTPState();
+}
+
+class _VerifyOTPState extends State<VerifyOTP> {
+  final otpFieldController = TextEditingController();
+
+  void handleSubmit() async {
+    String otp = otpFieldController.text;
+    if (otp.length != 6) {
+      // show wrong otp
+      return;
+    }
+    // send a post request to verify if this is the correct OTP
+    // data = await fetch();
+    // if (!(data.success)) {
+    //  // show wrong otp
+    // return;
+    // }
+
+    Map<String, String> data = {
+      'name': 'Manish Kumar Das',
+      'email': 'mkd@kgp.com',
+      'roll': '19GG20017',
+      'room': 'D-206',
+      'mobile': '7002845867',
+      'image': 'https://img.com/re4351'
+    };
+
+    final storage = await SharedPreferences.getInstance();
+    storage.setString('name', data['name']!);
+    storage.setString('email', data['email']!);
+    storage.setString('mobile', data['mobile']!);
+    storage.setString('room', data['room']!);
+    storage.setString('roll', data['roll']!);
+    storage.setString('image', data['image']!);
+
+    Navigator.pushNamed(context, '/rooms');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as OTPScreenArgs;
+    print('verify otp for ' + args.mobile);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -13,7 +66,7 @@ class VerifyOTP extends StatelessWidget {
         // color: Colors.amber,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(imgSrc),
+            image: NetworkImage(VerifyOTP.imgSrc),
             fit: BoxFit.cover,
           ),
         ),
@@ -31,19 +84,17 @@ class VerifyOTP extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 height: MediaQuery.of(context).size.height * 0.86 * 0.15,
                 child: Row(
-                  children: [
-                    Image.network(
-                        'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png')
-                  ],
+                  children: [Image.network(logoUrl)],
                 ),
                 // color: Colors.red,
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
                   // color: Colors.purple,
@@ -56,7 +107,7 @@ class VerifyOTP extends StatelessWidget {
                           'Verification Code',
                           style: TextStyle(fontSize: 35),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         const Text(
@@ -66,7 +117,7 @@ class VerifyOTP extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         // TextBox.fromLTRBD(20, 20, 20, 20, TextDirection.ltr),
@@ -78,20 +129,20 @@ class VerifyOTP extends StatelessWidget {
                             labelText: 'OTP',
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
+                          onPressed: handleSubmit,
+                          icon: const Icon(
                             Icons.check,
                           ),
-                          label: Text("Submit"),
+                          label: const Text("Submit"),
                           style: ElevatedButton.styleFrom(
                             // padding: EdgeInsets.all(20),
-                            minimumSize: Size.fromHeight(50),
+                            minimumSize: const Size.fromHeight(50),
                             primary: Colors.lightBlueAccent,
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontSize: 20,
                             ),
                           ),

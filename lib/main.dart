@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/screens/ShowQR.dart';
 import 'package:hostel_keys_management/screens/login.dart';
+import 'package:hostel_keys_management/screens/room.dart';
 import 'package:hostel_keys_management/screens/verify_otp.dart';
-import 'package:hostel_keys_management/screens/tests/scanQR.dart';
+import 'package:hostel_keys_management/screens/scanQR.dart';
 import './screens/home.dart';
 import './screens/test_home.dart';
+import './screens/room.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,11 +24,12 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/testScreen',
         routes: {
-          '/testScreen': (context) => TestHomePage(),
+          '/testScreen': (context) => const TestHomePage(),
           '/login': (context) => LoginPage(),
-          '/verify_otp': (context) => VerifyOTP(),
+          '/verify_otp': (context) => const VerifyOTP(),
           '/scan_qr_code': (context) => ScanQrPage(),
-          // '/room': (context) => TestHomePage(),
+          '/show_qr_code': (context) => const ShowQRPage(),
+          '/room': (context) => Room('1'),
           // '/generate_random_qr': (context) => TestHomePage(),
           // '/web_view': (context) =>
           //     WebViewContainer('https://github.com/the-halfbloodprince'),
