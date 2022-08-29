@@ -50,6 +50,8 @@ class _VerifyOTPState extends State<VerifyOTP> {
     storage.setString('room', data['room']!);
     storage.setString('roll', data['roll']!);
     storage.setString('image', data['image']!);
+    storage.setBool('loggedIn', true);
+    // TODO: set this bool to false on logout
 
     Navigator.pushNamed(context, '/rooms');
   }
