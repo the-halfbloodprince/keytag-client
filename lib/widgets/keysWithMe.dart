@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
-import '../models/users.dart';
+import 'package:hostel_keys_management/providers/user_provider.dart';
+import 'package:hostel_keys_management/screens/ShowQR.dart';
+import '../models/user.dart';
+import '../models/room.dart';
+import 'package:provider/provider.dart';
 
 class WithMe extends StatelessWidget {
   const WithMe({
     Key? key,
+    required this.room,
     required this.keysWith,
   }) : super(key: key);
 
+  final Room room;
   final User keysWith;
 
   @override
   Widget build(BuildContext context) {
+    User? me = context.watch<UserProvider>().currentUser;
+
+    if (me == null) {
+      Navigator.pushNamed(context, '/login');
+    }
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -26,18 +38,18 @@ class WithMe extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'keys with',
+                    '${room.name} keys with',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.grey,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 27,
                   ),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     height: 100,
                     // color: Colors.amber,
@@ -72,12 +84,12 @@ class WithMe extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.house, color: Colors.black45),
-                          SizedBox(
+                          const Icon(Icons.house, color: Colors.black45),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(keysWith.room,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w600,
@@ -87,12 +99,12 @@ class WithMe extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.phone, color: Colors.black45),
-                          SizedBox(
+                          const Icon(Icons.phone, color: Colors.black45),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(keysWith.mobile,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w600,
@@ -102,12 +114,12 @@ class WithMe extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.email, color: Colors.black45),
-                          SizedBox(
+                          const Icon(Icons.email, color: Colors.black45),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(keysWith.email,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w600,
@@ -121,7 +133,9 @@ class WithMe extends StatelessWidget {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/scan_qr_code');
+                      Navigator.pushNamed(context, '/show_qr_code',
+                          arguments: ShowQRPageArgs(room.id, me!.roll,
+                              'Scan this QR code to get the ${room.name} keys'));
                     },
                     icon: const Icon(Icons.key),
                     label: const Text('Give Keys'),

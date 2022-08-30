@@ -25,7 +25,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller!.resumeCamera();
+      controller!.pauseCamera();
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
@@ -34,9 +34,12 @@ class _ScanQrPageState extends State<ScanQrPage> {
   void readQr() async {
     if (result != null) {
       controller!.pauseCamera();
-      print('foundddddd!');
       print(result!.code);
-      print('foundddddd--------!');
+
+      // send request
+
+      Navigator.pushNamed(context, '/loading');
+      
       controller!.dispose();
     }
   }

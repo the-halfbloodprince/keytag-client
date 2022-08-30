@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/models/room.dart';
 
 class WithGuard extends StatelessWidget {
-  const WithGuard({Key? key}) : super(key: key);
+  WithGuard({required this.room});
+  final Room room;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +31,15 @@ class WithGuard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Text(
-            'Keys are with the guard',
+            '${room.name} Keys are with the guard',
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
             ),
           ),
@@ -46,16 +48,15 @@ class WithGuard extends StatelessWidget {
           padding: const EdgeInsets.all(40.0),
           child: ElevatedButton.icon(
             onPressed: () {
-              print('heyyy');
               Navigator.pushNamed(context, '/scan_qr_code');
             },
-            icon: Icon(Icons.key),
-            label: Text('Claim Keys'),
+            icon: const Icon(Icons.key),
+            label: const Text('Claim Keys'),
             style: ElevatedButton.styleFrom(
               // padding: EdgeInsets.all(20),
-              minimumSize: Size.fromHeight(50),
+              minimumSize: const Size.fromHeight(50),
               primary: Colors.lightBlueAccent,
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 20,
               ),
             ),

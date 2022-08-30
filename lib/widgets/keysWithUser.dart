@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import '../models/users.dart';
+import 'package:hostel_keys_management/models/room.dart';
+import '../models/user.dart';
 
 class WithUserWidget extends StatelessWidget {
   const WithUserWidget({
     Key? key,
+    required this.room,
     required this.keysWith,
   }) : super(key: key);
 
+  final Room room;
   final User keysWith;
 
   @override
@@ -26,18 +29,18 @@ class WithUserWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'keys with',
+                    '${room.name} keys with',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.grey,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 27,
                   ),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     height: 100,
                     // color: Colors.amber,
@@ -72,12 +75,12 @@ class WithUserWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.house, color: Colors.black45),
-                          SizedBox(
+                          const Icon(Icons.house, color: Colors.black45),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(keysWith.room,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w600,
@@ -87,31 +90,35 @@ class WithUserWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.phone, color: Colors.black45),
-                          SizedBox(
+                          const Icon(Icons.phone, color: Colors.black45),
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(keysWith.mobile,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
-                              )),
+                          Text(
+                            keysWith.mobile,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.email, color: Colors.black45),
-                          SizedBox(
+                          const Icon(Icons.email, color: Colors.black45),
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(keysWith.email,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
-                              )),
+                          Text(
+                            keysWith.email,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -121,8 +128,7 @@ class WithUserWidget extends StatelessWidget {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/show_qr_code',
-                          arguments: 'https://keys.com/api/1/2');
+                      Navigator.pushNamed(context, '/scan_qr_code');
                     },
                     icon: const Icon(Icons.key),
                     label: const Text('Claim Keys'),

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/providers/user_provider.dart';
 import 'package:hostel_keys_management/screens/ShowQR.dart';
 import 'package:hostel_keys_management/screens/login.dart';
 import 'package:hostel_keys_management/screens/room.dart';
 import 'package:hostel_keys_management/screens/rooms.dart';
 import 'package:hostel_keys_management/screens/verify_otp.dart';
 import 'package:hostel_keys_management/screens/scanQR.dart';
+import 'package:provider/provider.dart';
 import './screens/home.dart';
 import './screens/test_home.dart';
 import './screens/room.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => UserProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +37,7 @@ class MyApp extends StatelessWidget {
           '/verify_otp': (context) => const VerifyOTP(),
           '/scan_qr_code': (context) => ScanQrPage(),
           '/show_qr_code': (context) => const ShowQRPage(),
-          '/room': (context) => Room('1'),
+          '/room': (context) => RoomScreen(),
           '/rooms': (context) => RoomsScreen(),
           // '/generate_random_qr': (context) => TestHomePage(),
           // '/web_view': (context) =>

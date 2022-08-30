@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hostel_keys_management/models/users.dart';
+import 'package:hostel_keys_management/models/user.dart';
+import 'package:hostel_keys_management/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../config/variables.dart';
+import 'package:provider/provider.dart';
 
 class OTPScreenArgs {
   String mobile;
@@ -10,6 +11,9 @@ class OTPScreenArgs {
 
 class VerifyOTP extends StatefulWidget {
   const VerifyOTP({Key? key}) : super(key: key);
+
+  static String logoUrl =
+      'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png';
 
   static String imgSrc =
       'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80';
@@ -20,13 +24,19 @@ class VerifyOTP extends StatefulWidget {
 
 class _VerifyOTPState extends State<VerifyOTP> {
   final otpFieldController = TextEditingController();
+  static String logoUrl =
+      'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png';
 
   void handleSubmit() async {
     String otp = otpFieldController.text;
+
+    print('otp is: ' + otp);
+
     if (otp.length != 6) {
       // show wrong otp
       return;
     }
+
     // send a post request to verify if this is the correct OTP
     // data = await fetch();
     // if (!(data.success)) {
@@ -40,17 +50,20 @@ class _VerifyOTPState extends State<VerifyOTP> {
       'roll': '19GG20017',
       'room': 'D-206',
       'mobile': '7002845867',
-      'image': 'https://img.com/re4351'
+      'image': 'https://img.com/re4351',
+      'token': 'https://img.com/re4351',
     };
 
-    final storage = await SharedPreferences.getInstance();
-    storage.setString('name', data['name']!);
-    storage.setString('email', data['email']!);
-    storage.setString('mobile', data['mobile']!);
-    storage.setString('room', data['room']!);
-    storage.setString('roll', data['roll']!);
-    storage.setString('image', data['image']!);
-    storage.setBool('loggedIn', true);
+    context.read<UserProvider>().setUser(User(
+          name: data['name']!,
+          email: data['email']!,
+          roll: data['roll']!,
+          room: data['room']!,
+          mobile: data['mobile']!,
+          image: data['image']!,
+          token: data['token']!,
+        ));
+
     // TODO: set this bool to false on logout
 
     Navigator.pushNamed(context, '/rooms');
@@ -59,7 +72,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as OTPScreenArgs;
-    print('verify otp for ' + args.mobile);
+    // print('verify otp for ' + args.mobile);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -123,9 +136,10 @@ class _VerifyOTPState extends State<VerifyOTP> {
                           height: 30,
                         ),
                         // TextBox.fromLTRBD(20, 20, 20, 20, TextDirection.ltr),
-                        const TextField(
+                        TextField(
+                          controller: otpFieldController,
                           keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '696 969',
                             border: OutlineInputBorder(),
                             labelText: 'OTP',

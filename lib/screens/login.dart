@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hostel_keys_management/config/variables.dart';
+import 'package:hostel_keys_management/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/verify_otp.dart';
+import 'package:provider/provider.dart';
+import '../models/user.dart';
 
 class LoginPage extends StatefulWidget {
   static String imgSrc =
@@ -14,8 +16,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final phoneFieldController = TextEditingController();
 
+  static String logoUrl =
+      'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png';
+
   @override
   Widget build(BuildContext context) {
+    User? currentUser = context.watch<UserProvider>().currentUser;
+    print(currentUser);
+
     void handleSubmit(String mobile) async {
       // validate
       if (mobile.length != 10) {

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hostel_keys_management/widgets/room_card.dart';
+import '../models/user.dart';
+import '../providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class RoomKey {
   String name, id;
@@ -32,6 +35,12 @@ class _RoomsScreenState extends State<RoomsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? me = context.watch<UserProvider>().currentUser;
+
+    if (me == null) {
+      Navigator.pushNamed(context, '/login');
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
