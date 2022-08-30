@@ -9,4 +9,16 @@ class User {
     required this.image,
     required this.token,
   });
+
+  factory User.fromJson(Map<String, String> json) {
+    return User(
+      name: json['name']!,
+      email: json['email']!,
+      roll: json['roll']!,
+      room: json['room']!,
+      image: json['image']!,
+      mobile: json['mobile']!,
+      token: json['token']!,
+    );
+  }
 }
