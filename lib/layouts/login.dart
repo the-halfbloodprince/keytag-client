@@ -31,7 +31,7 @@ class LoginLayout extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 height: MediaQuery.of(context).size.height * 0.86 * 0.15,
                 child: Row(
                   children: [
@@ -43,7 +43,7 @@ class LoginLayout extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
                   // color: Colors.purple,
@@ -56,7 +56,7 @@ class LoginLayout extends StatelessWidget {
                           'Login',
                           style: TextStyle(fontSize: 40),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         // TextBox.fromLTRBD(20, 20, 20, 20, TextDirection.ltr),
@@ -68,18 +68,18 @@ class LoginLayout extends StatelessWidget {
                             labelText: 'Mobile Number',
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         ElevatedButton.icon(
                           onPressed: () {},
-                          icon: Icon(Icons.arrow_forward),
-                          label: Text('Send OTP'),
+                          icon: const Icon(Icons.arrow_forward),
+                          label: const Text('Send OTP'),
                           style: ElevatedButton.styleFrom(
                             // padding: EdgeInsets.all(20),
-                            minimumSize: Size.fromHeight(50),
+                            minimumSize: const Size.fromHeight(50),
                             primary: Colors.lightBlueAccent,
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontSize: 20,
                             ),
                           ),

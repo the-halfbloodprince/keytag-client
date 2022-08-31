@@ -5,8 +5,9 @@ import '../models/user.dart';
 
 Map<String, String> getHeaders(BuildContext ctx) {
   User? me = ctx.read<UserProvider>().currentUser;
-  if (me == null) {
-    return {};
+  Map<String, String> headers = {'version': '0.1.1'};
+  if (me != null) {
+    headers['x-auth-token'] = me.token;
   }
-  return {'x-auth-token': me.token};
+  return headers;
 }

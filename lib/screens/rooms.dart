@@ -92,15 +92,22 @@ class _RoomsScreenState extends State<RoomsScreen> {
           ),
           child: Column(
             children: [
-              // Container(
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              //   height: MediaQuery.of(context).size.height * 0.86 * 0.15,
-              //   child: Row(
-              //     children: [Image.network(logoUrl)],
-              //   ),
-              //   // color: Colors.red,
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 60,
+                    width: 60,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/user');
+                      },
+                      child: Image.network(
+                          'https://firebasestorage.googleapis.com/v0/b/ourmandav.appspot.com/o/XXL.jpg?alt=media&token=9d8dfe97-4b3d-4c39-af87-9725ddd3710e'),
+                    ),
+                  )
+                ],
+              ),
               const SizedBox(
                 height: 20,
               ),

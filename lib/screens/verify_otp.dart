@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/config/variables.dart';
 import 'package:hostel_keys_management/models/user.dart';
 import 'package:hostel_keys_management/providers/user_provider.dart';
 import 'package:hostel_keys_management/utils.dart';
@@ -33,16 +35,30 @@ class _VerifyOTPState extends State<VerifyOTP> {
   void handleSubmit(OTPScreenArgs args) async {
     String otp = otpFieldController.text;
 
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+
     if (otp.length != 6) {
       // show wrong otp
+      showSnackBar(context, 'Invalid OTP', 'Please enter a valid OTP',
+          ContentType.warning);
       return;
     }
 
     // send a post request to verify if this is the correct OTP
     Uri url = Uri.parse(generateUrl(context, ['otp']));
-    Response res = await post(url, body: {'otp': otp, 'mobile': args.mobile});
+    Response res = await post(url,
+        body: {'otp': otp, 'mobile': args.mobile},
+        headers: getHeaders(context));
 
     if (res.statusCode != 200) {
+      showSnackBar(
+          context,
+          'Incorrect OTP',
+          'Incorrect OTP! Please check your OTP once again',
+          ContentType.failure);
       return;
     }
 

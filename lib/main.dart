@@ -33,7 +33,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ConfigProvider>().setConfig(
           Config(
-              apiHostname: 'http://10.102.42.37:8081',
+              // apiHostname: 'http://10.102.42.37:8081',
+              apiHostname: 'http://13.127.74.133:8081',
+              seed: 'JwzeoyLfslWTfM_OMAEt5GCXch9IKxkJ',
               logoUrl:
                   'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png'),
         );

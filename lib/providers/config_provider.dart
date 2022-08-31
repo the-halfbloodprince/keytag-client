@@ -5,6 +5,7 @@ class ConfigProvider with ChangeNotifier {
   Config _appConfig = Config(
     apiHostname: 'http://localhost:8081',
     logoUrl: 'http://google.com',
+    seed: 'rkhall',
   );
   Config get appConfig => _appConfig;
   void setConfig(Config config) {

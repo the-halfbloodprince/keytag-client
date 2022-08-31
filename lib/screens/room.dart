@@ -48,8 +48,31 @@ class _RoomScreenState extends State<RoomScreen> {
         Uri.parse(generateUrl(ctx, ['api', 'key', args.id])),
         headers: getHeaders(ctx));
     var resBody = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
+    print(resBody);
+    // Response resUser = await get(
+    //     Uri.parse(generateUrl(ctx, ['api', 'user', resBody])),
+    //     headers: getHeaders(ctx));
+    // var resUserBody = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
+
+    User? user;
+
+    if (resBody['data']['user'] == null) {
+      user = null;
+    } else {
+      user = User(
+        id: resBody['data']['user']['_id'],
+        name: resBody['data']['user']['name'],
+        email: resBody['data']['user']['email'],
+        roll: resBody['data']['user']['roll'],
+        room: resBody['data']['user']['room'],
+        image: resBody['data']['user']['image'],
+        mobile: resBody['data']['user']['mobile'],
+        token: 'null',
+      );
+    }
+
     setState(() {
-      keysWith = resBody['data']['key']['with'] as User?;
+      keysWith = user;
       loading = false;
     });
   }

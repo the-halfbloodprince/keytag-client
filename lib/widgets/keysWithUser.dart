@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hostel_keys_management/models/room.dart';
+import 'package:hostel_keys_management/screens/scanQR.dart';
 import '../models/user.dart';
 
 class WithUserWidget extends StatelessWidget {
@@ -128,7 +129,11 @@ class WithUserWidget extends StatelessWidget {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/scan_qr_code');
+                      Navigator.pushNamed(
+                        context,
+                        '/scan_qr_code',
+                        arguments: ScanQRPageArgs(false),
+                      );
                     },
                     icon: const Icon(Icons.key),
                     label: const Text('Claim Keys'),

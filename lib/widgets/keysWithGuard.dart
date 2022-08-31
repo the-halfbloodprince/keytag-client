@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hostel_keys_management/models/room.dart';
+import 'package:hostel_keys_management/screens/scanQR.dart';
 
 class WithGuard extends StatelessWidget {
   WithGuard({required this.room});
@@ -48,7 +49,11 @@ class WithGuard extends StatelessWidget {
           padding: const EdgeInsets.all(40.0),
           child: ElevatedButton.icon(
             onPressed: () {
-              Navigator.pushNamed(context, '/scan_qr_code');
+              Navigator.pushNamed(
+                context,
+                '/scan_qr_code',
+                arguments: ScanQRPageArgs(true),
+              );
             },
             icon: const Icon(Icons.key),
             label: const Text('Claim Keys'),

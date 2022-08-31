@@ -11,18 +11,48 @@ class UserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? me = context.read<UserProvider>().currentUser;
+    void logOut() {
+      context.read<UserProvider>().removeUser();
+      Navigator.pushNamed(context, '/');
+    }
 
     return Scaffold(
-        body: Container(
-      child: Column(
-        children: [
-          Text(me!.name),
-          Text(me.email),
-          Text(me.roll),
-          Text(me.room),
-          Text(me.mobile),
-        ],
+      body: Container(
+        height: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              me!.name,
+              style: const TextStyle(fontSize: 40),
+            ),
+            Text(
+              me.email,
+              style: const TextStyle(fontSize: 40),
+            ),
+            Text(
+              me.roll,
+              style: const TextStyle(fontSize: 40),
+            ),
+            Text(
+              me.room,
+              style: const TextStyle(fontSize: 40),
+            ),
+            Text(
+              me.mobile,
+              style: const TextStyle(fontSize: 40),
+            ),
+            ElevatedButton(
+              onPressed: logOut,
+              child: const Text(
+                'Logout',
+                style: const TextStyle(fontSize: 40),
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
