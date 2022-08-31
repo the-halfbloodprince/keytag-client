@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hostel_keys_management/providers/user_provider.dart';
 import 'package:hostel_keys_management/screens/ShowQR.dart';
+import 'package:hostel_keys_management/utils.dart';
 import '../models/user.dart';
 import '../models/room.dart';
 import 'package:provider/provider.dart';
@@ -134,7 +135,15 @@ class WithMe extends StatelessWidget {
                   ElevatedButton.icon(
                     onPressed: () {
                       Navigator.pushNamed(context, '/show_qr_code',
-                          arguments: ShowQRPageArgs(room.id, me!.roll,
+                          arguments: ShowQRPageArgs(
+                              generateUrl(
+                                context,
+                                [
+                                  'transfer',
+                                  room.id,
+                                  me!.roll,
+                                ],
+                              ),
                               'Scan this QR code to get the ${room.name} keys'));
                     },
                     icon: const Icon(Icons.key),

@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hostel_keys_management/models/user.dart';
 import 'package:hostel_keys_management/providers/user_provider.dart';
+import 'package:hostel_keys_management/utils.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
+import '../providers/config_provider.dart';
 
 class OTPScreenArgs {
   String mobile;
@@ -24,13 +29,9 @@ class VerifyOTP extends StatefulWidget {
 
 class _VerifyOTPState extends State<VerifyOTP> {
   final otpFieldController = TextEditingController();
-  static String logoUrl =
-      'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png';
 
-  void handleSubmit() async {
+  void handleSubmit(OTPScreenArgs args) async {
     String otp = otpFieldController.text;
-
-    print('otp is: ' + otp);
 
     if (otp.length != 6) {
       // show wrong otp
@@ -38,23 +39,39 @@ class _VerifyOTPState extends State<VerifyOTP> {
     }
 
     // send a post request to verify if this is the correct OTP
-    // data = await fetch();
-    // if (!(data.success)) {
-    //  // show wrong otp
-    // return;
-    // }
+    Uri url = Uri.parse(generateUrl(context, ['otp']));
+    Response res = await post(url, body: {'otp': otp, 'mobile': args.mobile});
+
+    if (res.statusCode != 200) {
+      return;
+    }
+
+    // Map<String, String> data = {
+    //   'name': 'Manish Kumar Das',
+    //   'email': 'mkd@kgp.com',
+    //   'roll': '19GG20017',
+    //   'room': 'D-206',
+    //   'mobile': '7002845867',
+    //   'image': 'https://img.com/re4351',
+    //   'token': 'https://img.com/re4351',
+    // };
+
+    var resBody = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
+    print(resBody);
 
     Map<String, String> data = {
-      'name': 'Manish Kumar Das',
-      'email': 'mkd@kgp.com',
-      'roll': '19GG20017',
-      'room': 'D-206',
-      'mobile': '7002845867',
-      'image': 'https://img.com/re4351',
-      'token': 'https://img.com/re4351',
+      'id': resBody['data']['user']['_id']!,
+      'name': resBody['data']['user']['name']!,
+      'email': resBody['data']['user']['email']!,
+      'roll': resBody['data']['user']['roll']!,
+      'room': resBody['data']['user']['room']!,
+      'mobile': resBody['data']['user']['mobile']!,
+      'image': resBody['data']['user']['image'],
+      'token': resBody['data']['token']!,
     };
 
     context.read<UserProvider>().setUser(User(
+          id: data['id']!,
           name: data['name']!,
           email: data['email']!,
           roll: data['roll']!,
@@ -64,7 +81,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
           token: data['token']!,
         ));
 
-    // TODO: set this bool to false on logout
+    print(data);
 
     Navigator.pushNamed(context, '/rooms');
   }
@@ -103,7 +120,10 @@ class _VerifyOTPState extends State<VerifyOTP> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 height: MediaQuery.of(context).size.height * 0.86 * 0.15,
                 child: Row(
-                  children: [Image.network(logoUrl)],
+                  children: [
+                    Image.network(
+                        context.read<ConfigProvider>().appConfig.logoUrl)
+                  ],
                 ),
                 // color: Colors.red,
               ),
@@ -149,7 +169,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                           height: 30,
                         ),
                         ElevatedButton.icon(
-                          onPressed: handleSubmit,
+                          onPressed: () => handleSubmit(args),
                           icon: const Icon(
                             Icons.check,
                           ),

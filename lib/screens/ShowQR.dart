@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/utils.dart';
 import 'package:hostel_keys_management/widgets/qr.dart';
 
 class ShowQRPageArgs {
   // String url;
-  String keyId, userId;
+  String url;
   String message;
-  ShowQRPageArgs(this.keyId, this.userId, this.message);
+  ShowQRPageArgs(this.url, this.message);
 }
 
 class ShowQRPage extends StatelessWidget {
   const ShowQRPage();
 
-  static String apiHostname = 'hi';
-
-  String generateApiUrl(List<String> params) {
-    String apiUrl = apiHostname + "/api";
-    for (String param in params) {
-      apiUrl += ("/" + param);
-    }
-    return apiUrl;
-  }
-
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ShowQRPageArgs;
-    String url = generateApiUrl([args.keyId, args.userId]);
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -50,7 +40,7 @@ class ShowQRPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  QRCode(url),
+                  QRCode(args.url),
                 ],
               ),
             ),

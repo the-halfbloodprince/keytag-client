@@ -1,6 +1,7 @@
 class User {
-  String name, mobile, email, room, roll, image, token;
+  String id, name, mobile, email, room, roll, image, token;
   User({
+    required this.id,
     required this.name,
     required this.mobile,
     required this.email,
@@ -12,6 +13,7 @@ class User {
 
   factory User.fromJson(Map<String, String> json) {
     return User(
+      id: json['_id']!,
       name: json['name']!,
       email: json['email']!,
       roll: json['roll']!,

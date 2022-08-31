@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/config/variables.dart';
+import 'package:hostel_keys_management/utils.dart';
+import 'package:http/http.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQrPage extends StatefulWidget {
@@ -37,9 +40,10 @@ class _ScanQrPageState extends State<ScanQrPage> {
       print(result!.code);
 
       // send request
+      await post(Uri.parse('${result!.code}'), headers: getHeaders(context));
 
-      Navigator.pushNamed(context, '/loading');
-      
+      Navigator.pop(context);
+
       controller!.dispose();
     }
   }

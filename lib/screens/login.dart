@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hostel_keys_management/models/config.dart';
+import 'package:hostel_keys_management/providers/config_provider.dart';
 import 'package:hostel_keys_management/providers/user_provider.dart';
+import 'package:hostel_keys_management/utils.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/verify_otp.dart';
 import 'package:provider/provider.dart';
@@ -16,14 +20,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final phoneFieldController = TextEditingController();
 
-  static String logoUrl =
-      'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png';
-
   @override
   Widget build(BuildContext context) {
-    User? currentUser = context.watch<UserProvider>().currentUser;
-    print(currentUser);
-
     void handleSubmit(String mobile) async {
       // validate
       if (mobile.length != 10) {
@@ -33,6 +31,9 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       // await send request
+      Uri url = Uri.parse(generateUrl(context, ['login']));
+      print(url.toString());
+      post(url, body: {'mobile': mobile});
 
       Navigator.pushNamed(context, '/verify_otp',
           arguments: OTPScreenArgs(mobile));
@@ -67,7 +68,10 @@ class _LoginPageState extends State<LoginPage> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 height: MediaQuery.of(context).size.height * 0.86 * 0.15,
                 child: Row(
-                  children: [Image.network(logoUrl)],
+                  children: [
+                    Image.network(
+                        context.read<ConfigProvider>().appConfig.logoUrl)
+                  ],
                 ),
                 // color: Colors.red,
               ),
