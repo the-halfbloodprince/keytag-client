@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:hostel_keys_management/widgets/qr.dart';
 
 import '../layouts/general.dart';
 
@@ -12,7 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget mainWidget = Text('hi');
+    Widget mainWidget = const Text('hi');
     return Layout(child: mainWidget);
   }
 }

@@ -21,14 +21,13 @@ class RoomsScreen extends StatefulWidget {
   static String imgSrc =
       'https://images.unsplash.com/photo-1524230572899-a752b3835840?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80';
 
-  RoomsScreen({Key? key}) : super(key: key);
+  const RoomsScreen({Key? key}) : super(key: key);
 
   @override
   State<RoomsScreen> createState() => _RoomsScreenState();
 }
 
 class _RoomsScreenState extends State<RoomsScreen> {
-  // TODO: get all the keys from the API
 
   // List<RoomKey> rooms = [
   //   RoomKey('1', 'Music Room'),
@@ -59,9 +58,9 @@ class _RoomsScreenState extends State<RoomsScreen> {
   Widget build(BuildContext context) {
     User? me = context.watch<UserProvider>().currentUser;
 
-    if (me == null) {
-      Navigator.pushNamed(context, 'login');
-    }
+    // if (me == null) {
+    //   Navigator.pushNamed(context, 'login');
+    // }
 
     // print(me!.name);
 
@@ -87,14 +86,21 @@ class _RoomsScreenState extends State<RoomsScreen> {
           decoration: const BoxDecoration(
             // color: Colors.white,
             borderRadius: BorderRadius.all(
-              Radius.circular(20),
+              Radius.circular(16),
             ),
           ),
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  const Text(
+                    'Rooms',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   Container(
                     height: 60,
                     width: 60,
@@ -102,8 +108,16 @@ class _RoomsScreenState extends State<RoomsScreen> {
                       onTap: () {
                         Navigator.pushNamed(context, '/user');
                       },
-                      child: Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ourmandav.appspot.com/o/XXL.jpg?alt=media&token=9d8dfe97-4b3d-4c39-af87-9725ddd3710e'),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            24,
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(me!.image),
+                          ),
+                        ),
+                      ),
                     ),
                   )
                 ],
@@ -111,12 +125,13 @@ class _RoomsScreenState extends State<RoomsScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                'Rooms',
-                style: TextStyle(fontSize: 40),
-              ),
               Expanded(
                 child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(
+                        24,
+                      )),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),

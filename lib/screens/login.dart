@@ -3,15 +3,11 @@ import 'dart:convert';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:hostel_keys_management/config/variables.dart';
-import 'package:hostel_keys_management/models/config.dart';
 import 'package:hostel_keys_management/providers/config_provider.dart';
-import 'package:hostel_keys_management/providers/user_provider.dart';
 import 'package:hostel_keys_management/utils.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/verify_otp.dart';
 import 'package:provider/provider.dart';
-import '../models/user.dart';
 
 class LoginPage extends StatefulWidget {
   static String imgSrc =
@@ -42,7 +38,6 @@ class _LoginPageState extends State<LoginPage> {
 
       // await send request
       Uri url = Uri.parse(generateUrl(context, ['login']));
-      print(url.toString());
       Response res = await post(url,
           body: {'mobile': mobile}, headers: getHeaders(context));
       var resBody = jsonDecode(utf8.decode(res.bodyBytes)) as Map;

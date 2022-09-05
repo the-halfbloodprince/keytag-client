@@ -10,8 +10,6 @@ import 'package:hostel_keys_management/screens/user.dart';
 import 'package:hostel_keys_management/screens/verify_otp.dart';
 import 'package:hostel_keys_management/screens/scanQR.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import './screens/home.dart';
 import './screens/test_home.dart';
 import './screens/room.dart';
 import './models/config.dart';
@@ -22,18 +20,19 @@ void main() {
       ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => ConfigProvider()),
     ],
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     context.read<ConfigProvider>().setConfig(
           Config(
               // apiHostname: 'http://10.102.42.37:8081',
+              // apiHostname: 'http://9e77-203-110-242-31.ngrok.io',
               apiHostname: 'http://13.127.74.133:8081',
               seed: 'JwzeoyLfslWTfM_OMAEt5GCXch9IKxkJ',
               logoUrl:
@@ -48,6 +47,9 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),
+          // '/': (context) => LoginPage(),
+          // '/': (context) => const UserScreen(),
+          // '/': (context) => RoomsScreen(),
           '/testScreen': (context) => const TestHomePage(),
           '/login': (context) => LoginPage(),
           '/verify_otp': (context) => const VerifyOTP(),
@@ -56,13 +58,7 @@ class MyApp extends StatelessWidget {
           '/room': (context) => RoomScreen(),
           '/rooms': (context) => RoomsScreen(),
           '/user': (context) => const UserScreen(),
-          // '/web_view': (context) =>
-          //     WebViewContainer('https://github.com/the-halfbloodprince'),
         }
-        // home: Scaffold(
-        //   // body: HomePage(),
-        //   body: TestHomePage(),
-        // ),
         );
   }
 }

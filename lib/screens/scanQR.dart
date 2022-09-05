@@ -49,8 +49,8 @@ class _ScanQrPageState extends State<ScanQrPage> {
       var args = ModalRoute.of(context)!.settings.arguments as ScanQRPageArgs;
 
       // send request
-      print(
-          "${result!.code}${args.isExchangeRoute ? '/${generateNonce(context)}' : ''}");
+      // print(
+      //     "${result!.code}${args.isExchangeRoute ? '/${generateNonce(context)}' : ''}");
 
       Response res = await post(
         Uri.parse(
@@ -59,7 +59,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
       );
 
       var resBody = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
-      var data = resBody;
+      // var data = resBody;
 
       // print(data);
       showSnackBar(

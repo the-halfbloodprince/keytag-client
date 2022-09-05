@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hostel_keys_management/utils.dart';
 import 'package:hostel_keys_management/widgets/qr.dart';
 
 class ShowQRPageArgs {

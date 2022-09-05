@@ -9,6 +9,7 @@ class UserProvider with ChangeNotifier {
     _currentUser = user;
 
     SharedPreferences storage = await SharedPreferences.getInstance();
+    await storage.setString('id', user.id);
     await storage.setString('name', user.name);
     await storage.setString('email', user.email);
     await storage.setString('mobile', user.mobile);
@@ -24,6 +25,7 @@ class UserProvider with ChangeNotifier {
   void removeUser() async {
     _currentUser = null;
     SharedPreferences storage = await SharedPreferences.getInstance();
+    await storage.remove('id');
     await storage.remove('name');
     await storage.remove('email');
     await storage.remove('mobile');
@@ -32,7 +34,7 @@ class UserProvider with ChangeNotifier {
     await storage.remove('image');
     await storage.remove('token');
     storage.setBool('loggedIn', false);
-    
+
     notifyListeners();
   }
 }

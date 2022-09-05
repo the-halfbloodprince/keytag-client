@@ -7,7 +7,6 @@ import 'package:hostel_keys_management/models/user.dart';
 import 'package:hostel_keys_management/providers/user_provider.dart';
 import 'package:hostel_keys_management/utils.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import '../providers/config_provider.dart';
 
@@ -73,7 +72,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
     // };
 
     var resBody = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
-    print(resBody);
+    // print(resBody);
 
     Map<String, String> data = {
       'id': resBody['data']['user']['_id']!,
@@ -97,7 +96,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
           token: data['token']!,
         ));
 
-    print(data);
+    // print(data);
 
     Navigator.pushNamed(context, '/rooms');
   }
@@ -171,7 +170,6 @@ class _VerifyOTPState extends State<VerifyOTP> {
                         const SizedBox(
                           height: 30,
                         ),
-                        // TextBox.fromLTRBD(20, 20, 20, 20, TextDirection.ltr),
                         TextField(
                           controller: otpFieldController,
                           keyboardType: TextInputType.phone,
